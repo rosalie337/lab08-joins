@@ -5,6 +5,7 @@ module.exports = class Event{
     title;
     date;
     time;
+    duration;
     attendees;
 
 
@@ -13,13 +14,14 @@ module.exports = class Event{
       this.title = row.title;
       this.date = row.date;
       this.time = row.time;
+      this.duration = row.duration;
       this.attendees = row.attendees;
     }
 
-    static async insert({ title, date, time, attendees }) {
+    static async insert({ title, date, time, duration, attendees }) {
       const { rows } = await pool.query(
-        'INSERT INTO events (title, date, time, attendees) VALUES ($1, $2, $3, $4) RETURNING *',
-        [title, date, time, attendees]
+        'INSERT INTO events (title, date, time, duration, attendees) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+        [title, date, time, duration, attendees]
       );
 
       return new Event(rows[0]);
@@ -54,16 +56,17 @@ module.exports = class Event{
       return rows.map(row => new Event(row));
     }
 
-    static async update(id, { title, date, time, attendees }) {
+    static async update(id, { title, date, time, duration, attendees }) {
       const { rows } = await pool.query(
         `UPDATE events
                 SET title=$1,
                     date=$2,
                     time=$3,
-                    attendees=$4,
+                    duration=$4
+                    attendees=$5,
                 WHERE id=$6
                 RETURNING *`,
-        [title, date, time, attendees, id]
+        [title, date, time, duration, attendees, id]
       );
     
       if(!rows[0]) throw new Error('No even with id ${id} found');
