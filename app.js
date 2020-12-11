@@ -1,6 +1,6 @@
 const express = require('express');
-const { findById } = require('./lib/models/events');
-const Event = require('./model/events');
+const Event = require('./lib/models/events.js');
+const Recipe = require('./lib/models/recipes.js');
 const app = express();
 
 app.use(express.json());
@@ -10,6 +10,15 @@ app.post('/api/v1/events', (req, res, next) => {
     .insert(req.body)
     .then(event => res.send(event))
     .catch(next);
+  console.log('hey girl hey');
+});
+
+app.post('/api/v1/recipes', (req, res, next) => {
+  Recipe
+    .insert(req.body)
+    .then(recipe => res.send(recipe))
+    .catch(next);
+    console.log('wassup');
 });
 
 app.get('/api/v1/events/:id', (req, res, next) => {
@@ -18,6 +27,13 @@ app.get('/api/v1/events/:id', (req, res, next) => {
     .then(event => res.send(event))
     .catch(next);
 
+});
+app.get('/api/v1/recipe/:id', (req, res, next) => {
+  Recipe
+    .findById(req.params.id)
+    .then(recipe => res.send(recipe))
+    .catch(next);
+  
 });
 
 app.get('/api/v1/events', (req, res, next) => {
