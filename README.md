@@ -12,6 +12,6 @@ Test your routes with [supertest](https://github.com/visionmedia/supertest).
 
 ## Rubric
 
-* CRUD routes for your model 2 points)
-* At least one join (5 points)
-* test CRUD routes (3 points)
+[ ] CRUD routes for your model 2 points)
+[ ] At least one join (5 points)
+[ ] test CRUD routes (3 points)
