@@ -1,4 +1,4 @@
-const app = require('./lib/utils/models/events.js');
+const app = require('./lib/utils/models/events.js.js.js.js');
 
 const PORT = process.env.PORT || 7890;
 
