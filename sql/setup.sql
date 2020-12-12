@@ -4,15 +4,15 @@ DROP TABLE IF EXISTS events_recipes;
 
 CREATE TABLE events (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  title VARCHAR(255),
+  title TEXT,
   date INTEGER,
-  attendees VARCHAR(255)
+  attendees TEXT
 );
 
 CREATE TABLE recipes (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  ingredients VARCHAR(255),
-  instructions VARCHAR(255)
+  ingredients TEXT,
+  instructions TEXT
 );
 
 CREATE TABLE events_recipes (
