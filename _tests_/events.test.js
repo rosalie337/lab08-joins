@@ -54,4 +54,18 @@ describe('event routes', () => {
         { id: 2, ingredients:'1 tablespoons butter', instructions:'cook it and stir' }]
     });
   });
+
+  it('finds all events via GET', async() => {
+    const events = await Promise.all([
+      { title: 'Friendsgiving' },
+      { title: 'Christmas' },
+      { title: 'Birthday' },
+    ].map(event => Event.insert(event)));
+
+    const response = await request(app)
+      .get('/api/v1/events');
+
+    expect(response.body).toEqual(expect.arrayContaining(events));
+    expect(response.body).toHaveLength(events.length);
+  });
 });
