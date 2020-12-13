@@ -4,6 +4,7 @@ const request = require('supertest');
 const app = require('../lib/app');
 const Event = require('../lib/models/events');
 const Recipe = require('../lib/models/recipes');
+const { Events } = require('pg');
 
 describe('event routes', () => {
   beforeEach(() => {
@@ -90,5 +91,16 @@ describe('event routes', () => {
       date: expect.anything(),
       attendees: 'some friends'
     });
+  });
+
+  it('deletes an event by id', async() => {
+    const event = await Event.insert({
+      title: 'My First Event'
+    });
+
+    const response = await request(app)
+      .delete(`/api/v1/events/${event.id}`);
+
+    expect(response.body).toEqual(event);
   });
 });
