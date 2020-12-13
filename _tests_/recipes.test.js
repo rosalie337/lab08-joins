@@ -54,4 +54,23 @@ describe('recipes routes', () => {
     expect(response.body).toHaveLength(recipes.length);
   });
 
+  it('updates a recipe via PUT', async() => {
+    const recipe = await Recipe.insert({
+      ingredients:'2 plantains, 3 tlbs butter',
+      instructions:'Melt butter in sauce pan on medium heat, add plantains'
+    });
+
+    const response = await request(app)
+      .put(`/api/v1/recipes/${recipe.id}`)
+      .send({
+        ingredients:'2 bananas, 3 tlbs butter',
+        instructions:'Melt butter in sauce pan on medium heat, add bananas'
+      });
+
+    expect(response.body).toEqual({
+      id: recipe.id,
+      ingredients:'2 bananas, 3 tlbs butter',
+      instructions:'Melt butter in sauce pan on medium heat, add bananas'
+    });
+  });
 }); 
