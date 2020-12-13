@@ -73,4 +73,16 @@ describe('recipes routes', () => {
       instructions:'Melt butter in sauce pan on medium heat, add bananas'
     });
   });
-}); 
+
+  it('deletes a recipe by id', async() => {
+    const recipe = await Recipe.insert({
+      ingredients:'2 bananas, 3 tlbs butter',
+      instructions:'Melt butter in sauce pan on medium heat, add bananas'
+    });
+
+    const response = await request(app)
+      .delete(`/api/v1/recipes/${recipe.id}`);
+
+    expect(response.body).toEqual(recipe);
+  });
+});
