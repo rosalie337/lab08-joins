@@ -30,7 +30,7 @@ describe('recipes routes', () => {
 
   it('finds a recipe by id via GET', async() => {
     const recipe = await Recipe.insert({
-      ingredients:'2 plantains, 3 tbls butter',
+      ingredients:'2 plantains, 3 tlbs butter',
       instructions:'Melt butter in sauce pan on medium heat, add plantains'
     });
 
@@ -39,4 +39,19 @@ describe('recipes routes', () => {
 
     expect(res.body).toEqual(recipe);
   });
+
+  it('finds all recipes via GET', async() => {
+    const recipes = await Promise.all([
+      { ingredients:'2 bananas, 3 tlbs butter' },
+      { ingredients:'2 eggs, 3 tlbs butter' },
+      { ingredients:'2 plantains, 3 tlbs butter' }
+    ].map(recipe => Recipe.insert(recipe)));
+
+    const response = await request(app)
+      .get('/api/v1/recipes');
+
+    expect(response.body).toEqual(expect.arrayContaining(recipes));
+    expect(response.body).toHaveLength(recipes.length);
+  });
+
 }); 
