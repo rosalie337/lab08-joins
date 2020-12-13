@@ -2,6 +2,7 @@ const fs = require('fs');
 const pool = require('../lib/utils/pool');
 const request = require('supertest');
 const app = require('../lib/app');
+const Recipe = require('../lib/models/recipes');
 
 describe('recipes routes', () => {
   beforeEach(() => {
@@ -25,5 +26,17 @@ describe('recipes routes', () => {
       ingredients:'3 tablespoons sage',
       instructions:'cook it and stir'
     });
+  });
+
+  it('finds a recipe by id via GET', async() => {
+    const recipe = await Recipe.insert({
+      ingredients:'2 plantains, 3 tbls butter',
+      instructions:'Melt butter in sauce pan on medium heat, add plantains'
+    });
+
+    const res = await request(app)
+      .get(`/api/v1/recipes/${recipe.id}`);
+
+    expect(res.body).toEqual(recipe);
   });
 }); 

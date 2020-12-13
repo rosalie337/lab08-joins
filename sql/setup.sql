@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS events_recipes;
 CREATE TABLE events (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   title TEXT,
-  date INTEGER,
+  date DATE,
   attendees TEXT
 );
 
