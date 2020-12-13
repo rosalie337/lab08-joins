@@ -68,4 +68,27 @@ describe('event routes', () => {
     expect(response.body).toEqual(expect.arrayContaining(events));
     expect(response.body).toHaveLength(events.length);
   });
+
+  it('updates an event via PUT', async() => {
+    const event = await Event.insert({
+      title: 'My First Event',
+      date: '2021-11-23',
+      attendees: 'some friends'
+    });
+
+    const response = await request(app)
+      .put(`/api/v1/events/${event.id}`)
+      .send({
+        title: 'My Third Event',
+        date: '2021-01-23',
+        attendees: 'some friends'
+      });
+
+    expect(response.body).toEqual({
+      id: event.id,
+      title: 'My Third Event',
+      date: expect.anything(),
+      attendees: 'some friends'
+    });
+  });
 });
